@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+.venv/
+.history/
+.python-version
+*.py[cod]
+
+# Folders
+data/
+
+# Project Specific
+*.env
+scans/
+*.jpg
+*.png
+
+schema/*.yaml
+*.db
+*.parquet
+*.log
+
+# OS files
+.DS_Store
+temp_rois/
