@@ -12,7 +12,7 @@ data/
 *.env
 scans/
 *.jpg
-*.png
+# *.png
 
 schema/*.yaml
 *.db
