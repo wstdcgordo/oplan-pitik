@@ -34,9 +34,8 @@ def sanitize_amounts(amt_str):
 def test_zonal_ocr(image_path, coords_json):
     full_image_path = os.path.abspath(os.path.expanduser(image_path))
     full_coords_path = os.path.abspath(os.path.expanduser(coords_json))
-    print(f"--- 👁️ Project Pitik: Zonal OCR Test (Standardized 1000x1400) ---")
-    
-    
+    print("--- 👁️ Project Pitik: Zonal OCR Test (Standardized 1000x1400) ---")
+
     img = cv2.imread(full_image_path)
     if img is None:
         print(f"❌ Error: Hindi mabasa ang image sa: {full_image_path}")

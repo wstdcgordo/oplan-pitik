@@ -14,7 +14,7 @@ ix, iy = -1, -1
 cx, cy = -1, -1
 
 def draw_rectangle(event, x, y, flags, param):
-    global ix, iy, cx, cy, drawing, original_img
+    global ix, iy, cx, cy, drawing
 
     if event == cv2.EVENT_LBUTTONDOWN:
         drawing = True

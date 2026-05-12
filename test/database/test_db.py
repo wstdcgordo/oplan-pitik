@@ -2,9 +2,7 @@
 
 import mariadb
 import hashlib
-import hmac
 import json
-from datetime import datetime
 from getmac import get_mac_address
 
 # CONFIGURATION

@@ -3,7 +3,7 @@ import json
 import os
 
 # CONFIGURATION
-# Palitan ang path ng image na gusto mong i-map
+# Palitan ang path ng image na gusto mong i-map, since this is only a test.
 SAMPLE_IMAGE = os.path.expanduser("[put your own image path here]") 
 OUTPUT_JSON = "[put your own coordinate output path here].json"
 
