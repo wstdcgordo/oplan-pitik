@@ -81,7 +81,8 @@ if __name__ == "__main__":
     if choice in tiers:
         # AUTOMATIC FOLDER CREATION PARA HINDI NA MAG-ERROR
         save_path = os.getenv("BENCHMARK_SAVE_PATH")
-        os.makedirs(save_path, exist_ok=True)
+        if save_path:
+            os.makedirs(save_path, exist_ok=True)
         
         df = run_bench(mode, choice)
         print(f"\n✅ Done. Average Latency: {df['latency_sec'].mean():.4f}s")

@@ -1,0 +1,54 @@
+common_columns: &common_columns
+  - {list your templates here}
+
+mariadb:
+  valid_columns: *common_columns
+  event_type_local: "BENCHMARK_INGEST"
+  event_type_aws: "BENCHMARK_INGEST_AWS"
+  audit_table: {table_name_for_audit}
+  
+  create_database: |
+    CREATE DATABASE IF NOT EXISTS {db_name}
+  
+  create_main_table: |
+    CREATE TABLE IF NOT EXISTS {table_name} (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      {common_columns DATA_TYPE}
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+  
+  create_audit_log: |
+    CREATE TABLE IF NOT EXISTS hidden_audit_log (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      target_row_hash VARCHAR(128),
+      processor_mac VARCHAR(50),
+      event_type VARCHAR(50),
+      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+
+  insert_table_name_template: |
+    INSERT INTO table_name ({columns}) VALUES ({placeholders})
+  
+  insert_audit_log: |
+    INSERT INTO hidden_audit_log (target_row_hash, processor_mac, event_type)
+    VALUES (?, ?, ?, ?)
+
+bigquery:
+  valid_columns: *common_columns   # reuse same anchor
+  event_type: "BENCHMARK_INGEST_CLOUD"
+  
+  create_dataset_template: |
+    CREATE SCHEMA IF NOT EXISTS `{project}.{dataset_id}`
+    OPTIONS (location = 'asia-southeast1')
+  
+  create_main_table_template: |
+    CREATE TABLE IF NOT EXISTS `{project}.{dataset_id}.table_name` (
+      {common_columns DATA_TYPE}
+    )
+  
+  create_audit_log_template: |
+    CREATE TABLE IF NOT EXISTS `{project}.{dataset_id}.hidden_audit_log` (
+      target_row_hash STRING,
+      processor_mac STRING,
+      event_type STRING,
+      timestamp TIMESTAMP NOT NULL
+    )
