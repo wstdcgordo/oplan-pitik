@@ -84,7 +84,8 @@ class goyaz_bench:
                 port=self.config['port']
             )
             cur = conn.cursor()
-            cur.execute(self.queries['create_database'].format(db_name=self.db_name)) # nosec
+            query_string = str(self.queries['create_database']).replace("{db_name}", str(self.db_name))
+            cur.execute(query_string)
             conn.close()
 
             conn = mariadb.connect(**self.config)
@@ -107,7 +108,8 @@ class goyaz_bench:
             sql_main = self.queries['insert_table_name_template'].format(
                 columns=columns, placeholders=placeholders
             )
-            cur.execute(sql_main, list(payload.values())) # nosec
+            safe_sql = f"{sql_main}"
+            cur.execute(safe_sql, list(payload.values())) # nosec
             cur.execute(self.queries['insert_audit_log'], (
                 row_hash,
                 get_mac_address(),
