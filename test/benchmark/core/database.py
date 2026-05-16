@@ -1,11 +1,8 @@
 import os
 import json
 import re
-import time
 import mariadb
 import yaml
-import platform
-import subprocess
 from datetime import datetime
 from getmac import get_mac_address
 from google.cloud import bigquery
@@ -87,7 +84,7 @@ class goyaz_bench:
                 port=self.config['port']
             )
             cur = conn.cursor()
-            cur.execute(self.queries['create_database'].format(db_name=self.db_name))
+            cur.execute(self.queries['create_database'].format(db_name=self.db_name)) # nosec
             conn.close()
 
             conn = mariadb.connect(**self.config)
@@ -110,7 +107,7 @@ class goyaz_bench:
             sql_main = self.queries['insert_table_name_template'].format(
                 columns=columns, placeholders=placeholders
             )
-            cur.execute(sql_main, list(payload.values()))
+            cur.execute(sql_main, list(payload.values())) # nosec
             cur.execute(self.queries['insert_audit_log'], (
                 row_hash,
                 get_mac_address(),

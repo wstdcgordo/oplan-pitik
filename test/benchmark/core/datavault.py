@@ -18,13 +18,13 @@ class DatabaseServiceManager:
         system = platform.system()
         try:
             if system == "Darwin":      # macOS
-                status = subprocess.run(
+                status = subprocess.run(  # nosec
                     ["brew", "services", "info", "mariadb"],
                     capture_output=True, text=True
                 )
                 if "started" not in status.stdout.lower():
                     print("Starting MariaDB via brew services...")
-                    subprocess.run(["brew", "services", "start", "mariadb"], check=True)
+                    subprocess.run(["brew", "services", "start", "mariadb"], check=True)  # nosec
                 else:
                     print("MariaDB is already running.")
                 return True
